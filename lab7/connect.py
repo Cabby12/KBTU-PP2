@@ -6,7 +6,7 @@ def get_connection():
         port=5432,
         dbname="phonebook_db",
         user="postgres",
-        password="alikhan2201"
+        password="YOURPASSWORD"
     )
     return conn
 
