@@ -1,1 +1,17 @@
+0) Создать папку phonebook и закинуть туда файлы
 
+1) Скачать https://www.postgresql.org/download/windows/ (запомнить пароль, StackBuilder можно скипнуть)
+
+2) Открыть pgAdmin, подключиться к серверу, сверху Tools -> Query Tool, запустить: 
+CREATE DATABASE phonebook_db;
+
+3) Открыть cmd, скачать библиотеку: 
+pip install psycopg2-binary
+
+4) Открыть connect.py, поменять password на свой пароль
+
+5) Открыть cmd, перейти в папку с файлами проекта: cd [Расположение папки]
+Как только открыта папка Phonebook, запустить:
+python phonebook.py
+
+6) Чтобы импортировать csv таблицу — использовать опцию 4 в меню
