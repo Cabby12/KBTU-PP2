@@ -24,6 +24,18 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE PROCEDURE update_contact(p_old_phone TEXT, p_new_name TEXT DEFAULT NULL, p_new_phone TEXT DEFAULT NULL)
+LANGUAGE plpgsql AS $$
+BEGIN
+    IF p_new_name IS NOT NULL THEN
+        UPDATE PhoneBook SET name = p_new_name WHERE phone = p_old_phone;
+    END IF;
+    IF p_new_phone IS NOT NULL THEN
+        UPDATE PhoneBook SET phone = p_new_phone WHERE phone = p_old_phone;
+    END IF;
+END;
+$$;
+
 CREATE OR REPLACE FUNCTION bulk_insert_contacts(p_data TEXT[][])
 RETURNS TABLE(rejected_name TEXT, rejected_phone TEXT, reason TEXT)
 LANGUAGE plpgsql AS $$

@@ -41,6 +41,16 @@ def upsert_contact(name, phone):
     print("done")
 
 
+def update_contact(old_phone, new_name=None, new_phone=None):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("CALL update_contact(%s, %s, %s)", (old_phone, new_name, new_phone))
+    conn.commit()
+    cur.close()
+    conn.close()
+    print("updated")
+
+
 def bulk_insert(contacts):
     if len(contacts) == 0:
         print("no contacts")
@@ -139,11 +149,12 @@ def menu():
     while True:
         print("\n1. browse")
         print("2. search")
-        print("3. add/update one")
-        print("4. bulk add from console")
-        print("5. import csv")
-        print("6. delete by phone")
-        print("7. delete by name")
+        print("3. add new contact")
+        print("4. update existing contact")
+        print("5. bulk add from console")
+        print("6. import csv")
+        print("7. delete by phone")
+        print("8. delete by name")
         print("0. exit")
         choice = input("pick: ")
 
@@ -157,14 +168,19 @@ def menu():
             phone = input("phone: ")
             upsert_contact(name, phone)
         elif choice == '4':
-            console_bulk_add()
+            old = input("current phone of contact to update: ")
+            new_name = input("new name (leave empty to keep): ").strip() or None
+            new_phone = input("new phone (leave empty to keep): ").strip() or None
+            update_contact(old, new_name, new_phone)
         elif choice == '5':
+            console_bulk_add()
+        elif choice == '6':
             path = input("csv path [contacts.csv]: ") or "contacts.csv"
             import_csv(path)
-        elif choice == '6':
+        elif choice == '7':
             phone = input("phone: ")
             delete_contact(phone=phone)
-        elif choice == '7':
+        elif choice == '8':
             name = input("name: ")
             delete_contact(username=name)
         elif choice == '0':
